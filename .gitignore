@@ -1,0 +1,25 @@
+# Byte-compiled / optimized Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python env
+venv/
+env/
+.venv/
+env.bak/
+venv.bak/
+.venv.bak/
+
+# Compiled C extensions
+*.so
+
+# macOS specific files
+.DS_Store
+
+# PyCharm files
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
