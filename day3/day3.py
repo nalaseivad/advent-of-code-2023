@@ -38,7 +38,7 @@ def generate_lines_window(lines):
       return
 
 
-def check_line_1(line, start_index, end_index):
+def check_line(line, start_index, end_index):
   chars = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.')
   for index in range(max(0, start_index - 1), min(end_index + 1, len(line) - 1)):
     char = line[index]
@@ -76,11 +76,11 @@ def get_adjacent_numbers(line, start_index, end_index):
 
 
 def is_part_number(lag_line, current_line, lead_line, start_index, end_index):
-  if check_line_1(lag_line, start_index, end_index):
+  if check_line(lag_line, start_index, end_index):
     return True
-  if check_line_1(current_line, start_index, end_index):
+  if check_line(current_line, start_index, end_index):
     return True
-  if check_line_1(lead_line, start_index, end_index):
+  if check_line(lead_line, start_index, end_index):
     return True
   return False
 
@@ -91,7 +91,7 @@ def get_gear_info(lag_line, current_line, lead_line, start_index, end_index):
   lag_line_numbers = get_adjacent_numbers(lag_line, start_index, end_index)
   for number in lag_line_numbers:
     numbers.append(number)
-
+    
   current_line_numbers = get_adjacent_numbers(current_line, start_index, end_index)
   for number in current_line_numbers:
     numbers.append(number)
@@ -119,7 +119,7 @@ def part_1(file_path):
         number = match.group()
         start_index = match.start()
         end_index = match.end()
-        print(f'{number} {start_index} {end_index}')
+        debug_print(f'{number} {start_index} {end_index}')
         if is_part_number(lag_line, current_line, lead_line, start_index, end_index):
           debug_print('Is part')
           part_numbers.append(int(number))
