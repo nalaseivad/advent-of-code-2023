@@ -38,11 +38,6 @@ def generate_lines_window(lines):
       return
 
 
-# def part_n(process_line_fn, file_path):
-#   with open(file_path, 'r') as file:
-#     result = sum(map(process_line_fn, file))
-#     print(result)
-
 def check_line_1(line, start_index, end_index):
   chars = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.')
   for index in range(max(0, start_index - 1), min(end_index + 1, len(line) - 1)):
@@ -91,8 +86,6 @@ def is_part_number(lag_line, current_line, lead_line, start_index, end_index):
 
 
 def get_gear_info(lag_line, current_line, lead_line, start_index, end_index):
-  #start_index = max(0, start_index - 1)
-  #end_index = min(end_index + 1, len(current_line) - 1)
   numbers = []
 
   lag_line_numbers = get_adjacent_numbers(lag_line, start_index, end_index)
