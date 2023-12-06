@@ -64,7 +64,7 @@ def part_2(file_path):
 
 
 if len(sys.argv) != 3:
-  print("Usage: python3 day4.py <part> <file_path>")
+  print(f'Usage: python3 {sys.argv[0]} <part> <file_path>')
   exit(1)
 
 part = sys.argv[1]
