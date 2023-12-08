@@ -40,16 +40,16 @@ def process_line_2(line):
   #print(f'{index} Found: {first_digit}{last_digit}')
   return first_digit * 10 + last_digit
 
-def partN(process_line_fn):
+def part_n(process_line_fn):
   with open(file_path, 'r') as file:
     result = sum(map(process_line_fn, file))
   print(result)
 
-def part1():
-  partN(process_line_1)
+def part_1():
+  part_n(process_line_1)
 
-def part2():
-  partN(process_line_2)
+def part_2():
+  part_n(process_line_2)
 
 
 if len(sys.argv) != 3:
@@ -62,9 +62,9 @@ file_path = sys.argv[2]
 init()
 
 if part == '1':
-  part1()
+  part_1()
 elif part == '2':
-  part2()
+  part_2()
 else:
   print('Unknown part')
   exit(1)
