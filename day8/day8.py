@@ -46,7 +46,7 @@ def init(file_path):
 
 #
 # Follow the path around the network from a given start node until we reach an end condition.
-# Return the length of the path and then end node name.
+# Return the length of the path and the end node name.
 #
 def follow_path(network, path, start_node_name, is_end_node_fn):
   node_name = start_node_name
@@ -95,7 +95,7 @@ def part_2(file_path):
   # I notice that the path length to get from an xxA node to an zzZ node is the same as to get from the xxZ node back to
   # an xxZ node, and in fact the cycle from each xxZ node takes us back to the same xxZ node in all cases as well.
   # So, we have a number of cycles that we need to synchronize the end points of (the point when they get to an xxZ
-  # node).  This is just the Lowest Common Multiple of all the cycle lengths.
+  # node).  This is just the Lowest Common Multiple of all the cycle lengths.  Math!
   #
   lengths = [v[0] for _, v in paths.items()]
   print(lcm(*lengths))
