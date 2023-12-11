@@ -1,9 +1,8 @@
 import sys
 import pprint
-from copy import deepcopy
 
 
-debug_level = 1
+debug_level = 0
 
 def debug_print(s, level = 1):
   if level > debug_level: return
@@ -124,7 +123,7 @@ def part_n(file_path, fn):
   debug_print(f'valid_moves: {valid_moves}')
 
   distances = follow_pipe(surface, start_x, start_y, valid_moves[0])
-  
+
   fn(surface, start_x, start_y, valid_moves, distances)
 
 
