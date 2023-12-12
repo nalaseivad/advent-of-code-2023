@@ -1,10 +1,9 @@
 import sys
 import pprint
 from itertools import combinations
-from math import sqrt
 
 
-debug_level = 1
+debug_level = 0
 
 def debug_print(s, level = 1):
   if level > debug_level: return
@@ -55,7 +54,7 @@ def init_image(file_path):
   
 
 def part_n(file_path, expansion_factor):
-  image, rows_without_galaxy, cols_without_galaxy, galaxies = init_image(file_path)
+  _, rows_without_galaxy, cols_without_galaxy, galaxies = init_image(file_path)
   num_galaxies = len(galaxies.keys())
   galaxy_pairs = combinations(range(1, num_galaxies + 1), 2)
 
