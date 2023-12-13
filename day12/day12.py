@@ -27,13 +27,15 @@ def replace_in_pattern(pattern, values):
     ret += values[n] if c == '?' else c
   return ret
 
-
+#
+# Left over from aborted attempts at part_2
+#
 def possibilities(num_spots, possible_values):
   if num_spots == 1:
     return possible_values
   ret = []
   for x in possible_values:
-    for y in possibilities(num_spots -1, possible_values):
+    for y in possibilities(num_spots - 1, possible_values):
       ret.append(x + y)
   return ret
 
