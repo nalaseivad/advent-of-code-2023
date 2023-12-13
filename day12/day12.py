@@ -3,7 +3,6 @@ import pprint
 
 
 cache = {}
-cache_hit_count = 0
 
 
 debug_level = 0
