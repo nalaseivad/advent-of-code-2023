@@ -60,8 +60,6 @@ def part_2(file_path):
     boxes = {}
     for token in tokens:
       label, op, focal_length = re.match(r'^([a-z]*)(=|-)(\d*)', token).groups()
-      label_hash = hash(label)
-      if label_hash not in boxes: boxes[label_hash] = []
       { '-' : op_dash, '=' : op_equals }[op](boxes, label, focal_length)
     answer = 0
     for k, list in boxes.items():
