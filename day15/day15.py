@@ -1,7 +1,6 @@
 import sys
 import re
 import pprint
-from collections import deque
 from functools import reduce
 
 
@@ -18,33 +17,6 @@ def debug_pretty_print(x, level = 1):
   if level > debug_level: return
   pp = pprint.PrettyPrinter(indent = 4)
   pp.pprint(x)
-
-
-def partition_impl(iterable, bucket_size, offset):
-  buckets = deque()
-  n = 0
-  for item in iterable:
-    if n % offset == 0:
-      buckets.append([])
-    for bucket in buckets:
-      bucket.append(item)
-    if len(buckets[0]) == bucket_size:
-      yield buckets.popleft()
-    n += 1
-  while len(buckets) > 0:
-    yield buckets.popleft()
-
-
-#
-# Partition a list into an iterable of sublists of a certain size with a specific offset.  The last list may be
-# incomplete.
-# Examples
-#   partition([1, 2, 3, 4, 5, 6, 7], 2)    -> [[1, 2], [3, 4], [5, 6], [7]]
-#   partition([1, 2, 3, 4, 5, 6, 7], 3, 2) -> [[1, 2, 3], [3, 4, 5], [5, 6, 7], [7]]
-#
-def partition(iterable, bucket_size, offset = None):
-  if offset == None: offset = bucket_size
-  return partition_impl(iterable, bucket_size, offset)
 
 
 def hash_char(accumulator, c):
