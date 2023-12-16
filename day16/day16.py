@@ -1,5 +1,6 @@
 import sys
 import pprint
+from copy import deepcopy
 
 
 debug_level = 0
@@ -35,21 +36,21 @@ def update_grid(grid, start_xy, direction, level = 0):
   x, y = start_xy
   while True:
     if x < 0 or x == len(grid[0]) or y < 0 or y == len(grid):
-      debug_print('out of bounds')
+      debug_print('out of bounds', 2)
       break
 
     key = (x, y, direction)
     cell = grid[y][x]
     set = cell[2]
     if key in set:
-      debug_print('loop')
+      debug_print('loop', 2)
       break
 
     set.add(key)
     cell[1] += 1
     c = cell[0]
   
-    debug_print(f"{level}: {x}, {y}, {direction} : '{c}'")
+    debug_print(f"{level}: {x}, {y}, {direction} : '{c}'", 2)
 
     if c == '-' and direction in ('N', 'S'):
       update_grid(grid, new_xy(x, y, 'E'), 'E', level + 1)
@@ -67,34 +68,64 @@ def update_grid(grid, start_xy, direction, level = 0):
       x, y = new_xy(x, y, direction)
 
 
+def debug_print_grid(grid):
+  for row in grid:
+    for cell in row:
+      debug_print(cell[0], end='')
+    debug_print()
+  debug_print()
+
+
+def count_energized(grid, start_xy, direction):
+  update_grid(grid, start_xy, direction)
+  count = 0
+  for row in grid:
+    for cell in row:
+      count += 1 if cell[1] > 0 else 0
+  return count
+
+
 def part_1(file_path):
   with open(file_path, 'r') as lines:
     rows = (line.rstrip('\n') for line in lines)
     grid = [[[c, 0, set()] for c in row] for row in rows]
 
-    for row in grid:
-      for cell in row:
-        debug_print(cell[0], end='')
-      debug_print()
-    debug_print()
+    debug_print_grid(grid)
 
-    update_grid(grid, (0, 0), 'E')
-
-    for row in grid:
-      for cell in row:
-        debug_print('#' if cell[1] > 0 else '.', end='')
-      debug_print()
-
-
-    count = 0
-    for row in grid:
-      for cell in row:
-        count += 1 if cell[1] > 0 else 0
+    count = count_energized(grid, (0, 0), 'E')
     print(count)
 
 
 def part_2(file_path):
-  print('to do')
+  with open(file_path, 'r') as lines:
+    rows = (line.rstrip('\n') for line in lines)
+    grid = [[[c, 0, set()] for c in row] for row in rows]
+
+    max_count = 0
+    width = len(grid)
+    height = len(grid[0])
+
+    for x in range(width):
+      grid2 = deepcopy(grid)
+      count = count_energized(grid2, (x, 0), 'S')
+      debug_print(f'{x}, {0} {count}')
+      max_count = max(max_count, count)
+      grid2 = deepcopy(grid)
+      count = count_energized(grid2, (x, height - 1), 'N')
+      debug_print(f'{x}, {height - 1} {count}')
+      max_count = max(max_count, count)
+
+    for y in range(height):
+      grid2 = deepcopy(grid)
+      count = count_energized(grid2, (0, y), 'E')
+      debug_print(f'{0}, {y} {count}')
+      max_count = max(max_count, count)
+      grid2 = deepcopy(grid)
+      count = count_energized(grid2, (width - 1, y), 'W')
+      debug_print(f'{width - 1}, {y} {count}')
+      max_count = max(max_count, count)
+
+    print(max_count)
 
 
 if len(sys.argv) != 3:
