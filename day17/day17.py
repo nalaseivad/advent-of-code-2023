@@ -47,27 +47,30 @@ def update_grid_with_path(grid, path, end_key):
 
 
 def get_next_cells_n(grid, start_r, start_c, state, extra_tests_fn):
-  in_dir, straight_count = state
+  in_direction, straight_count = state
   num_rows = len(grid)
   num_cols = len(grid[0])
   next_cells = []
-  for new_dir, (dr, dc) in enumerate([(0, -1), (1, 0), (0, 1), (-1, 0)]):
+  directions = [ 'N', 'E', 'S', 'W' ]
+  direction_deltas = { 'N' : (0, -1), 'E' : (1, 0), 'S' : (0, 1), 'W' : (-1, 0) }
+  for new_direction, direction in enumerate(directions):
+    dr, dc = direction_deltas[direction]
     new_r, new_c = start_r + dr, start_c + dc
-    new_straight_count = (1 if new_dir != in_dir else straight_count + 1)
-    new_state = (new_dir, new_straight_count)
-    if (new_dir + 2) % 4 == in_dir:
-      continue
+    new_straight_count = (1 if new_direction != in_direction else straight_count + 1)
+    new_state = (new_direction, new_straight_count)
+    if (new_direction + 2) % 4 == in_direction:
+      continue  # Can't go back the same way we came in
     if new_r < 0 or new_r >= num_rows or new_c < 0 or new_c >= num_cols:
-      continue
+      continue  # out of bounds
     if extra_tests_fn(state, new_state):
       continue
-    next_cells.append((new_r, new_c, (new_dir, new_straight_count)))
+    next_cells.append((new_r, new_c, new_state))
   return next_cells
 
 
 def extra_tests_1(state, new_state):
   _, new_straight_count = new_state
-  return new_straight_count > 3
+  return new_straight_count > 3  # Can only go straight a max of 3 times
 
 
 def get_next_cells_1(grid, start_r, start_c, state):
@@ -75,9 +78,9 @@ def get_next_cells_1(grid, start_r, start_c, state):
 
 
 def extra_tests_2(state, new_state):
-  in_dir, straight_count = state
-  new_dir, new_straight_count = new_state
-  if new_dir != in_dir and straight_count < 4:
+  in_direction, straight_count = state
+  new_direction, new_straight_count = new_state
+  if new_direction != in_direction and straight_count < 4:
     return True
   if new_straight_count > 10:
     return True
@@ -128,6 +131,8 @@ def part_n(file_path, initial_state, get_next_cells_fn, calc_answer_fn):
 
 def calc_answer_n(grid, distances, extra_tests_fn):
   num_rows, num_cols = len(grid), len(grid[0])
+
+  # Find the min heat loss ('distance') over all paths that finish in the bottom right cell and also meet other tests
   answer = float('inf')
   end_key = None
   for k, v in distances.items():
@@ -140,19 +145,25 @@ def calc_answer_n(grid, distances, extra_tests_fn):
 
 
 def calc_answer_1(grid, distances):
+  # No additional tests for part 1
   return calc_answer_n(grid, distances, lambda state: True)
 
 
 def part_1(file_path):
-  part_n(file_path, (2, 0), get_next_cells_1, calc_answer_1)
+  # in_direction for the starting cell (top left) = East and initial straight_count = 0
+  initial_state = ('E', 0)
+  part_n(file_path, initial_state, get_next_cells_1, calc_answer_1)
     
 
 def calc_answer_2(grid, distances):
+  # For part 2 the path must terminate in the final cell with a run of at least 4 straight moves
   return calc_answer_n(grid, distances, lambda state: state[1] >= 4)
 
 
 def part_2(file_path):
-  part_n(file_path, (2, 0), get_next_cells_2, calc_answer_2)
+  # in_direction for the starting cell (top left) = East and initial straight_count = 0
+  initial_state = ('E', 0)
+  part_n(file_path, initial_state, get_next_cells_2, calc_answer_2)
 
 
 if len(sys.argv) != 3:
