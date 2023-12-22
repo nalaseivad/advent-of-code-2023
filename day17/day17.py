@@ -54,11 +54,11 @@ def get_next_cells_n(grid, start_r, start_c, state, extra_tests_fn):
   for new_dir, (dr, dc) in enumerate([(0, -1), (1, 0), (0, 1), (-1, 0)]):
     new_r, new_c = start_r + dr, start_c + dc
     new_straight_count = (1 if new_dir != in_dir else straight_count + 1)
+    new_state = (new_dir, new_straight_count)
     if (new_dir + 2) % 4 == in_dir:
       continue
     if new_r < 0 or new_r >= num_rows or new_c < 0 or new_c >= num_cols:
       continue
-    new_state = (new_dir, new_straight_count)
     if extra_tests_fn(state, new_state):
       continue
     next_cells.append((new_r, new_c, (new_dir, new_straight_count)))
