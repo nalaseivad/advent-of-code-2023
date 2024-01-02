@@ -1,11 +1,9 @@
 import sys
 import pprint
 import re
-from collections import defaultdict, deque
+from collections import deque
 from enum import Enum
-from copy import deepcopy
 from math import lcm
-from time import sleep
 
 
 debug_level = 0
@@ -49,7 +47,7 @@ def partition_impl(iterable, bucket_size, offset):
 # Partition a list into an iterable of sublists of a certain size with a specific offset.  The last list may be
 # incomplete.
 # Examples
-#   partition([1, 2, 3, 4, 5], 2, 1) -> [[1, 2], [2, 3], [3, 4], [4, 5]]
+#   partition([1, 2, 3, 4, 5], 2, 1) -> [[1, 2], [2, 3], [3, 4], [4, 5], [5]]
 #
 def partition(iterable, bucket_size, offset):
   return partition_impl(iterable, bucket_size, offset)
