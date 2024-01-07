@@ -159,7 +159,7 @@ def init_bricks(file_path):
     rows = (line.rstrip('\n') for line in lines)
     bricks = []
     for r, row in enumerate(rows):
-      name = chr(ord('A') + r) if r <=6 else ''
+      name = chr(ord('A') + r) if r <= 6 else ''
       brick = [name, *[[int(n) for n in coordinate.split(',')] for coordinate in row.split('~')]]
       bricks.append(brick)
     return bricks
