@@ -221,7 +221,7 @@ def part2_fn(bricks, supports, rests_on):
 
 
 #
-# * Each line is a pair of (x, y, z) coordinates that describe the extemes (opposite corners) of a 3D block/brick.
+# * Each line is a pair of (x, y, z) coordinates that describe the extremes (opposite corners) of a 3D block/brick.
 # * In each pair only one of the coordinates is different so each of the bricks they describe are 1 unit wide and long
 #   and n units high, potentially reoriented of course.
 # * In each pair the coordinate that differs is always larger in the second element of the pair.  This means that the
